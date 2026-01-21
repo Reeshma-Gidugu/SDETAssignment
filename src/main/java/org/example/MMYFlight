@@ -1,0 +1,62 @@
+import org.openqa.selenium.By; 
+import org.openqa.selenium.WebDriver; 
+import org.openqa.selenium.WebElement; 
+import org.openqa.selenium.chrome.ChromeDriver; 
+  
+public class MMYFlight { 
+  
+    static WebDriver driver; 
+  
+    public static void launchBrowser() { 
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe"); 
+        driver = new ChromeDriver(); 
+        driver.manage().window().maximize(); 
+    } 
+  
+    public static void openURL(String url) { 
+        driver.get(url); 
+    } 
+  
+    public static void click(By locator) { 
+        driver.findElement(locator).click(); 
+    } 
+  
+    public static void enterText(By locator, String value) throws InterruptedException { 
+        WebElement element = driver.findElement(locator); 
+        element.click(); 
+        element.sendKeys(value); 
+        Thread.sleep(2000); 
+    } 
+  
+    public static void closeBrowser() { 
+        driver.quit(); 
+    } 
+  
+  
+    public static void main(String[] args) throws InterruptedException { 
+  
+        launchBrowser(); 
+        openURL("https://www.makemytrip.com"); 
+        click(By.xpath("//body")); 
+         
+        By flightsTab = By.xpath("//div[@class='chHeaderContainer']/nav/ul/li[1]/span"); 
+        By oneWay = By.xpath("//div[@class='searchWidgetContainer ']/div/div[1]/ul/li[1]"); 
+        By fromClick = By.xpath("//div[@class='fsw ']/div[1]/div[1]"); 
+        By fromInput = By.xpath("//input[@placeholder='From']"); 
+        By toClick = By.xpath("//div[@class='fsw ']/div[1]/div[2]"); 
+        By toInput = By.xpath("//input[@placeholder='To']"); 
+  
+        click(flightsTab); 
+  
+        click(oneWay); 
+  
+        click(fromClick); 
+        enterText(fromInput, "Hyderabad"); 
+  
+        click(toClick); 
+        enterText(toInput, "Bangalore"); 
+  
+        closeBrowser(); 
+    } 
+} 
+ 
